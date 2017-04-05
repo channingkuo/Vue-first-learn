@@ -3,6 +3,12 @@
 import Vue from 'vue'
 import router from './router'
 
+// element-ui框架
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+
+Vue.use(ElementUI)
+
 Vue.config.productionTip = false
 
 // 开启debug模式
