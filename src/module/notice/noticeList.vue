@@ -35,32 +35,49 @@
         },
 		methods: {
             searchClick: function(){
-                this.fetchDataFromDB(function(resp){
-
-                }, function(err){
-
-                })
+				this.listData = []
+                this.loadData()
             },
             loadData: function(){
-                this.fetchDataFromDB(function(resp){
-
+                this.fetchDataFromDB(function(data){
+					this.loading = false
+					for(var i = 0; i < data.length; i++){
+						this.listData.push(data[i])
+					}
                 }, function(err){
-
+					this.loading = false
+					Toast({
+						message: err
+						// iconClass: 'icon icon-success',
+						// position: 'middle',
+						// duration: 3000
+					})
                 })
             },
             fetchDataFromDB: function(success, error){
+				var loading = Loading.service({
+					lock: true,
+					text: '正在加载...'
+				})
 
+				let apiUrl = ""
+	          	let url = localStorage.XrmBaseUrl + apiUrl
+	          	let config = {
+	          		 headers: {'Authorization': 'Basic ' + localStorage.XrmAuthToken}
+	          	}
+	            this.$http.get(url, config)
+	                .then((resp) => {
+	                    loading.close()
+						success(resp.data)
+	                }, (err) => {
+	                	loading.close()
+						error(err.response.data)
+	                })
             },
             loadMore() {
                 this.loading = true
-
-                this.fetchDataFromDB(function(resp){
-
-                }, function(err){
-
-                })
-
-                this.loading = false
+				this.pageIndex += 1
+                this.loadData()
             }
 		}
 	}
