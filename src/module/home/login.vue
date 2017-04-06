@@ -12,9 +12,10 @@
 
 		<div class="settings-row">
 			<el-checkbox v-model="loginModel.isRememberPassword" class="remember-password">记住密码</el-checkbox>
-			<el-button type="text" @click="setServerAddress">设置服务器</el-button>
+			<router-link :to="{ path: '/serverAddress' }">
+				<el-button type="text">设置服务器</el-button>
+			</router-link>
 		</div>
-
 		<el-button type="info" class="login-button" @click="login('loginModel')">登录</el-button>
 	</div>
 </template>
@@ -24,33 +25,33 @@
 		data() {
 			var validateUsername = (rule, value, callback) => {
 				if (value === '') {
-		         callback(new Error('请输入用户名'));
-		      }else{
+		         	callback(new Error('请输入用户名'));
+		        }else{
 					callback()
 				}
 			}
-		   var validatePassword = (rule, value, callback) => {
-		      if (value === '') {
-		         callback(new Error('请输入密码'));
-		      }else{
+		    var validatePassword = (rule, value, callback) => {
+		        if (value === '') {
+		         	callback(new Error('请输入密码'));
+		      	}else{
 					callback()
 				}
 		   }
 		   return {
-		      loginModel: {
+		      	loginModel: {
 					username: '',
-		         password: '',
+		         	password: '',
 					isRememberPassword: false
-		      },
-		      formCheck: {
+		      	},
+		      	formCheck: {
 					username: [
-		            { validator: validateUsername, trigger: 'blur' }
-		         ],
-		         password: [
-		            { validator: validatePassword, trigger: 'blur' }
-		         ]
-		      }
-		   }
+						{ validator: validateUsername, trigger: 'blur' }
+					],
+		         	password: [
+		            	{ validator: validatePassword, trigger: 'blur' }
+		         	]
+		      	}
+		   	}
 		},
 		methods: {
 			login(formName){
@@ -61,12 +62,9 @@
 						console.log('username:' + this.loginModel.username)
 						console.log('password:' + this.loginModel.password)
 						console.log('remember password:' + this.loginModel.isRememberPassword)
+						this.$router.push({ path: '/application' })
 					}
 				})
-			},
-			setServerAddress: function(){
-				// TODO 跳转到设置服务器页面
-				console.log("设置服务器地址...")
 			}
 		}
 	}

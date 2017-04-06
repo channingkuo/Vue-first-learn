@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Hello from '@/components/Hello'
 import Application from '@/module/home/application'
 import Home from '@/module/home/login'
@@ -14,16 +15,17 @@ export default new Router({
             name: 'application',
             component: Application
         },
-
         {
             path: '/hello',
             name: 'Hello',
             component: Hello
-        }, {
+        },
+        {
             path: '/home',
             name: 'Home',
             component: Home
-        }, {
+        },
+        {
             path: '/serverAddress',
             name: 'ServerAddress',
             component: ServerAddress
