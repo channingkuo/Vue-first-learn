@@ -11,11 +11,12 @@ import 'element-ui/lib/theme-default/index.css'
 Vue.use(ElementUI)
 
 // 引用eleme移动框架的导航栏
-import { Header, Button, InfiniteScroll } from 'mint-ui'
+import { Header, Button } from 'mint-ui'
+import { InfiniteScroll } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.component(Header.name, Header)
 Vue.component(Button.name, Button)
-Vue.component(InfiniteScroll.name, InfiniteScroll)
+Vue.use(InfiniteScroll)
 
 import App from './app'
 

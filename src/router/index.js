@@ -45,6 +45,6 @@ export default new Router({
             meta: { keepAlive: true },
             component: AccountDetail
         },
-        // { path: '*', redirect: '/home' }
+        { path: '*', redirect: '/home' }
     ]
 })
