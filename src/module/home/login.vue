@@ -22,6 +22,7 @@
 
 <script>
 	import { Loading } from 'element-ui'
+	import { Toast } from 'mint-ui'
 
 	export default {
 		data() {
@@ -93,7 +94,12 @@
 							router.push({ path: '/application' })
 						}, function(err){
 							loading.close()
-							console.log(err.response.data)
+							Toast({
+  								message: err.response.data
+								// iconClass: 'icon icon-success',
+  								// position: 'middle',
+  								// duration: 3000
+							})
 						})
 					}
 				})
