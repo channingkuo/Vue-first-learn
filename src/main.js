@@ -14,6 +14,8 @@ import 'mint-ui/lib/style.css'
 Vue.component(Header.name, Header)
 Vue.component(Button.name, Button)
 
+import App from './app'
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
@@ -25,5 +27,7 @@ Vue.config.debug = true
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router
+  router,
+  template: '<App/>',
+  components: { App }
 })
