@@ -86,8 +86,8 @@
 							localStorage.username = username
 							localStorage.password = password
 
-							localStorage.XrmAuthToken = resp.AuthToken;
-		                    localStorage.UserId = resp.SystemUserId;
+							localStorage.XrmAuthToken = resp.data.AuthToken;
+		                    localStorage.UserId = resp.data.SystemUserId;
 
 							loading.close()
 							router.push({ path: '/application' })
@@ -100,7 +100,7 @@
 			},
 			checkLogin: function(url, data, success, error){
 				url = localStorage.XrmBaseUrl + url
-				this.$http.post(url, data).then(response => {								
+				this.$http.post(url, data).then(response => {
 					success(response)
 				}, err => {
 					error(err)
