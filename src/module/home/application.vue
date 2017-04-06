@@ -1,15 +1,15 @@
 <template>
 	<div class="application">
 	<mt-header title="应用">
-		  <router-link to="/home" slot="left">
+		<router-link to="/home" slot="left">
 		    <mt-button icon="back"></mt-button>
-		  </router-link>
-		</mt-header>
+		</router-link>
+	</mt-header>
 
-		<div v-for="menu in menuList" class="menu" @click="goClick(menu.MenuUrl)">
-			<img v-if="menu.MenuIcon" :src="'data:image/png;base64,' + menu.MenuIcon" class="menuIcon">
-			<div class="menuName">{{menu.MenuName}}</div>
-		</div>
+	<div v-for="menu in menuList" class="menu" @click="goClick(menu.MenuUrl)">
+		<img v-if="menu.MenuIcon" :src="'data:image/png;base64,' + menu.MenuIcon" class="menuIcon">
+		<div class="menuName">{{menu.MenuName}}</div>
+	</div>
 	</div>
 </template>
 
@@ -24,7 +24,6 @@
 			}
 		},
 		created() {
-
 			var loading = Loading.service({
 				lock: true,
 				text: '正在加载数据...'
@@ -36,7 +35,7 @@
           		 headers: {'Authorization': 'Basic ' + localStorage.XrmAuthToken}
           	}
 
-            this.$http.get(url,config)
+            this.$http.get(url, config)
                 .then((data) => {
                     var menus = data.data.SystemMenuList;
                     for (var i = 0; i < menus.length; i++) {
@@ -51,10 +50,10 @@
                 }, (err) => {
                 	loading.close()
                 	Toast({
-							message: err.response.data
+						message: err.response.data
 						// iconClass: 'icon icon-success',
-							// position: 'middle',
-							// duration: 3000
+						// position: 'middle',
+						// duration: 3000
 					})
                 })
 		},
@@ -67,9 +66,6 @@
 </script>
 
 <style scoped>
-	.home{
-		/*background-color: #09f;*/
-	}
 	.menu{
 		margin: 10px 0;
 		max-width: 33%;
