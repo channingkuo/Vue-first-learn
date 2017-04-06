@@ -21,6 +21,8 @@
 </template>
 
 <script>
+	import { Loading } from 'element-ui'
+
 	export default {
 		data() {
 			var validateUsername = (rule, value, callback) => {
@@ -68,6 +70,11 @@
 				var username = this.loginModel.username
 				var password = this.loginModel.password
 				var router = this.$router
+
+				var loading = Loading.service({
+					lock: true,
+					text: 'Loading...'
+				})
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						// 登录
@@ -82,8 +89,10 @@
 							localStorage.XrmAuthToken = resp.AuthToken;
 		                    localStorage.UserId = resp.SystemUserId;
 
+							loading.close()
 							router.push({ path: '/application' })
 						}, function(err){
+							loading.close()
 							console.log(err.response.data)
 						})
 					}
