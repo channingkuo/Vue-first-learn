@@ -15,6 +15,8 @@ Vue.component(Button.name, Button)
 
 Vue.config.productionTip = false
 
+Vue.prototype.$http = axios
+
 // 开启debug模式
 // Vue.config.debug = true
 // 配置是否允许vue-devtools 检查代码  默认为true
