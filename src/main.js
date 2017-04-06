@@ -16,7 +16,6 @@ Vue.component(Button.name, Button)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-// Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Basic ' + localStorage.XrmAuthToken
 
 // 开启debug模式
 Vue.config.debug = true
