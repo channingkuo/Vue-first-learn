@@ -1,7 +1,9 @@
 <template>
     <div id="serverAddress">
-        <mt-header title="标题过长会隐藏后面的内容啊哈哈哈哈">
-            <mt-button icon="back" slot="left"></mt-button>
+        <mt-header title="服务器地址">
+            <router-link to="/home" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
             <mt-button icon="save" slot="right">保存</mt-button>
         </mt-header>
     </div>
@@ -19,21 +21,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>

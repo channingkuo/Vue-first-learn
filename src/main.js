@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import router from './router'
 import axios from 'axios'
+import './components/assets/css/reset.css'
 // 引用element-ui
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
