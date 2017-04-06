@@ -6,8 +6,11 @@ import axios from 'axios'
 // 引用element-ui
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-
 Vue.use(ElementUI)
+// 引用eleme移动框架的导航栏
+import { Header, Button } from 'mint-ui'
+Vue.component(Header.name, Header)
+Vue.component(Button.name, Button)
 
 Vue.config.productionTip = false
 
