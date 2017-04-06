@@ -100,7 +100,7 @@
 			},
 			checkLogin: function(url, data, success, error){
 				url = localStorage.XrmBaseUrl + url
-				this.$http.post(url, data).then(response => {
+				this.$http.post(url, data).then(response => {								
 					success(response)
 				}, err => {
 					error(err)
