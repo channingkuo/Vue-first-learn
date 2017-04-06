@@ -1,8 +1,8 @@
 <template>
     <div id="serverAddress">
         <mt-header title="标题过长会隐藏后面的内容啊哈哈哈哈">
-            <mt-button slot="left" @click="goBack">返回</mt-button>
-            <mt-button slot="right" @click="saveServerAddress">保存</mt-button>
+            <mt-button icon="back" slot="left"></mt-button>
+            <mt-button icon="save" slot="right">保存</mt-button>
         </mt-header>
     </div>
 </template>
