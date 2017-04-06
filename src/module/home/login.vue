@@ -72,12 +72,12 @@
 				var password = this.loginModel.password
 				var router = this.$router
 
-				var loading = Loading.service({
-					lock: true,
-					text: 'Loading...'
-				})
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
+						var loading = Loading.service({
+							lock: true,
+							text: 'Loading...'
+						})
 						// 登录
 						this.checkLogin('api/Authentication/login', {
 							uid: this.loginModel.username,
