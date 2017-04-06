@@ -1,6 +1,6 @@
 <template>
 	<div class="application">
-	<mt-header title="应用">
+		<mt-header title="应用">
 		  <router-link to="/home" slot="left">
 		    <mt-button icon="back"></mt-button>
 		  </router-link>
@@ -60,7 +60,8 @@
 		},
 		methods: {
 			goClick: function (url) {
-				alert(url);
+				// alert(url);
+				this.$router.push(url)
 			}
 		}
 	}
