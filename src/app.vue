@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <transition :name="transitionName">
-      <router-view></router-view>
-    </transition>
-  </div>
+    <div>
+        <transition :name="transitionName">
+            <keep-alive>
+                <router-view v-if="$route.meta.keepAlive"/>
+            </keep-alive>
+            <router-view v-if="!$route.meta.keepAlive"/>
+        </transition>
+    </div>
 </template>
 
 <script>

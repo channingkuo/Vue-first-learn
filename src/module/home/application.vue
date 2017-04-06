@@ -1,15 +1,15 @@
 <template>
 	<div class="application">
-	<mt-header title="应用">
-		<router-link to="/home" slot="left">
-		    <mt-button icon="back"></mt-button>
-		</router-link>
-	</mt-header>
+		<mt-header title="应用">
+		  	<router-link to="/home" slot="left">
+		    	<mt-button icon="back"></mt-button>
+			</router-link>
+		</mt-header>
 
-	<div v-for="menu in menuList" class="menu" @click="goClick(menu.MenuUrl)">
-		<img v-if="menu.MenuIcon" :src="'data:image/png;base64,' + menu.MenuIcon" class="menuIcon">
-		<div class="menuName">{{menu.MenuName}}</div>
-	</div>
+		<div v-for="menu in menuList" class="menu" @click="goClick(menu.MenuUrl)">
+			<img v-if="menu.MenuIcon" :src="'data:image/png;base64,' + menu.MenuIcon" class="menuIcon">
+			<div class="menuName">{{menu.MenuName}}</div>
+		</div>
 	</div>
 </template>
 
@@ -59,7 +59,8 @@
 		},
 		methods: {
 			goClick: function (url) {
-				alert(url);
+				// alert(url);
+				this.$router.push(url)
 			}
 		}
 	}
