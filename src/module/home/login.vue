@@ -16,7 +16,7 @@
 				<el-button type="text">设置服务器</el-button>
 			</router-link>
 		</div>
-		<el-button type="info" class="login-button" @click="login('loginModel')">登录</el-button>
+		<el-button type="primary" class="login-button" @click="login('loginModel')">登录</el-button>
 	</div>
 </template>
 
@@ -57,31 +57,44 @@
 	        this.$nextTick(function() {
 				var tmp = localStorage.isRememberPassword ? localStorage.isRememberPassword : false
 	            this.loginModel.isRememberPassword = tmp == 'true' ? true : false
+
+				this.loginModel.username = localStorage.username ? localStorage.username : ''
+				this.loginModel.password = localStorage.password ? localStorage.password : ''
 	        })
 	    },
 		methods: {
 			login(formName){
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						localStorage.isRememberPassword = this.loginModel.isRememberPassword
-						// TODO 登录
+						// 登录
 						this.checkLogin('api/Authentication/login', {
 							uid: this.loginModel.username,
 		                    pwd: this.loginModel.password
+						}, function(resp){
+							// console.log(resp.data)
+							localStorage.isRememberPassword = this.loginModel.isRememberPassword
+							console.log(localStorage.isRememberPassword)
+							localStorage.username = this.loginModel.username
+							console.log(localStorage.isRememberPassword)
+							localStorage.password = this.loginModel.password
+							console.log(localStorage.isRememberPassword)
+
+							localStorage.XrmAuthToken = resp.AuthToken;
+		                    localStorage.UserId = resp.SystemUserId;
+
+							this.$router.push({ path: '/application' })
+						}, function(err){
+							console.log(err.response.data)
 						})
-						console.log('username:' + this.loginModel.username)
-						console.log('password:' + this.loginModel.password)
-						console.log('remember password:' + this.loginModel.isRememberPassword)
-						this.$router.push({ path: '/application' })
 					}
 				})
 			},
-			checkLogin: function(url, data){
+			checkLogin: function(url, data, success, error){
 				url = localStorage.XrmBaseUrl + url
 				this.$http.post(url, data).then(response => {
-					return response.data
-				}, response => {
-    				console.log('登录失败' + response.data)
+					success(response)
+				}, err => {
+					error(err)
 				})
 			}
 		}
