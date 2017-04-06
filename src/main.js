@@ -15,9 +15,8 @@ Vue.component(Header.name, Header)
 Vue.component(Button.name, Button)
 
 Vue.config.productionTip = false
-
 Vue.prototype.$http = axios
-// Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Basic eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYXBwaWQiOiJYY3JtIn0..j07mxhiyg8UtSQab7z284w.XcyyGKYpDar9Im4EPlvRpCqzLTxBPVXfEneqj4ThqKHqv6c5rO5PMWFrC4AOC0ILcrEkv57mPntUaesHYmFTYO6KZEOo_4MJtD0GciHW21CIcxt_HG93elRgR3qP9OuBJtdxCDKSOZbAbkoYAJxOjhVWeq7QyuB6tYX2YSxCDMBiOXahfgPe30h4d8snwBEoNeX4uW0pvmKdQK_MjkAdzQ.OAGrV_AEectvPlY3eXE_Xw'
+// Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Basic ' + localStorage.XrmAuthToken
 
 // 开启debug模式
 Vue.config.debug = true
