@@ -82,7 +82,9 @@
 					return response.data
 				}, response => {
     				console.log('登录失败' + response.data)
-				})
+				}).then((res) =>{
+					console.log(res)
+				} )
 			}
 		}
 	}
