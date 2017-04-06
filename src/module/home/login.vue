@@ -64,6 +64,10 @@
 	    },
 		methods: {
 			login(formName){
+				var remember = this.loginModel.isRememberPassword
+				var username = this.loginModel.username
+				var password = this.loginModel.password
+				var router = this.$router
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						// 登录
@@ -71,18 +75,14 @@
 							uid: this.loginModel.username,
 		                    pwd: this.loginModel.password
 						}, function(resp){
-							// console.log(resp.data)
-							localStorage.isRememberPassword = this.loginModel.isRememberPassword
-							console.log(localStorage.isRememberPassword)
-							localStorage.username = this.loginModel.username
-							console.log(localStorage.isRememberPassword)
-							localStorage.password = this.loginModel.password
-							console.log(localStorage.isRememberPassword)
+							localStorage.isRememberPassword = remember
+							localStorage.username = username
+							localStorage.password = password
 
 							localStorage.XrmAuthToken = resp.AuthToken;
 		                    localStorage.UserId = resp.SystemUserId;
 
-							this.$router.push({ path: '/application' })
+							router.push({ path: '/application' })
 						}, function(err){
 							console.log(err.response.data)
 						})
