@@ -84,8 +84,10 @@
 		                    pwd: this.loginModel.password
 						}, function(resp){
 							localStorage.isRememberPassword = remember
-							localStorage.username = username
-							localStorage.password = password
+							if(remember){
+								localStorage.username = username
+								localStorage.password = password
+							}
 
 							localStorage.XrmAuthToken = resp.data.AuthToken;
 		                    localStorage.UserId = resp.data.SystemUserId;
