@@ -8,8 +8,8 @@
 
         <el-input placeholder="请输入查询条件" icon="search" v-model="queryValue" :on-icon-click="searchClick"></el-input>
 
-        <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <li v-for="item in listData">{{ item }}</li>
+        <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+            <li v-for="(item, index) in listData">{{ index }}</li>
         </ul>
 	</div>
 </template>
@@ -30,21 +30,35 @@
 		},
         mounted: function() {
             this.$nextTick(function() {
-                this.loadData()
+                this.loadData(false)
             })
         },
 		methods: {
             searchClick: function(){
+				this.pageIndex = 1
 				this.listData = []
-                this.loadData()
+                this.loadData(false)
             },
-            loadData: function(){
+            loadData: function(isLoadMore){
+				if(!isLoadMore){
+					var loading = Loading.service({
+						lock: true,
+						text: '正在加载...'
+					})
+				}
                 this.fetchDataFromDB(function(data){
+					if(!isLoadMore){
+						loading.close()
+					}
 					this.loading = false
 					for(var i = 0; i < data.length; i++){
 						this.listData.push(data[i])
 					}
+					// console.log(this.listData)
                 }, function(err){
+					if(!isLoadMore){
+						loading.close()
+					}
 					this.loading = false
 					Toast({
 						message: err
@@ -55,29 +69,22 @@
                 })
             },
             fetchDataFromDB: function(success, error){
-				var loading = Loading.service({
-					lock: true,
-					text: '正在加载...'
-				})
-
-				let apiUrl = ""
+				let apiUrl = 'api/Notice/list?queryValue=' + this.queryValue + '&pageIndex=' + this.pageIndex + '&pageSize=' + this.pageSize
 	          	let url = localStorage.XrmBaseUrl + apiUrl
 	          	let config = {
 	          		 headers: {'Authorization': 'Basic ' + localStorage.XrmAuthToken}
 	          	}
 	            this.$http.get(url, config)
 	                .then((resp) => {
-	                    loading.close()
 						success(resp.data)
 	                }, (err) => {
-	                	loading.close()
 						error(err.response.data)
 	                })
             },
             loadMore() {
                 this.loading = true
 				this.pageIndex += 1
-                this.loadData()
+                this.loadData(true)
             }
 		}
 	}

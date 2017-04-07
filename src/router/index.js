@@ -50,8 +50,8 @@ export default new Router({
             component: AccountDetail
         },
         {
-            path: '/notice/list',
-            name: 'notice/list',
+            path: '/notice/noticeView',
+            name: 'notice/noticeView',
             meta: { keepAlive: true },
             component: NoticeList
         },
