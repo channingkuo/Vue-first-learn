@@ -16,7 +16,7 @@
 		methods: {
 			goDetail (accountId) {
 				console.log(accountId)
-				this.$router.push({name:'accountDetail',params:{accountId,accountId}})
+				this.$router.push({name:'_accountDetail',params:{accountId,accountId}})
 			}
 		},
 		data() {

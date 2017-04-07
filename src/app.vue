@@ -2,10 +2,13 @@
     <div>
         <transition :name="transitionName">
             <keep-alive>
-                <router-view v-if="$route.meta.keepAlive"/>
+                <router-view v-if="$route.meta.keepAlive" />
             </keep-alive>
-            <router-view v-if="!$route.meta.keepAlive"/>
         </transition>
+        <transition :name="transitionName">
+            <router-view v-if="!$route.meta.keepAlive" />
+        </transition>
+
     </div>
 </template>
 

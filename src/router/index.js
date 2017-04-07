@@ -45,8 +45,8 @@ export default new Router({
         },
         {
             path: '/accountDetail/:accountId',
-            name: 'accountDetail',
-            meta: { keepAlive: true },
+            name: '_accountDetail',
+            meta: { keepAlive: false },
             component: AccountDetail
         },
         {

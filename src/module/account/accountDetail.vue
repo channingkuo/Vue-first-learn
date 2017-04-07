@@ -15,6 +15,7 @@
 	export default {
 		methods: {
 			saveAccountDetail () {
+				this.tmpArr = JSON.parse(localStorage.accList)
 				this.tmpArr.push({name:this.accName,id:this.accName})
 				localStorage.accList= JSON.stringify(this.tmpArr)
 				this.$router.go(-1)
