@@ -8,6 +8,7 @@ import ServerAddress from '@/module/home/serverAddress'
 import AccountList from '@/module/account/accountList'
 import AccountDetail from '@/module/account/accountDetail'
 import NoticeList from '@/module/notice/noticeList'
+import Channing from '@/module/channing/channingList'
 
 Vue.use(Router)
 
@@ -54,6 +55,12 @@ export default new Router({
             name: 'notice/noticeView',
             meta: { keepAlive: true },
             component: NoticeList
+        },
+        {
+            path: '/channing/list',
+            name: 'channing/list',
+            meta: { keepAlive: true },
+            component: Channing
         },
         { path: '*', redirect: '/home' }
     ]
