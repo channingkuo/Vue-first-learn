@@ -8,7 +8,10 @@
 
         <mt-loadmore :auto-fill="false"
                     :top-method="refresh"
-                    :bottom-method="loadMore"
+                    :bottom-method="loadMore" 
+                    :bottom-all-loaded="allLoaded" 
+                    ref="RefreshAndLoadMore" 
+                    @bottom-status-change="handleBottomChange" 
                     @top-status-change="handleTopChange" class="list-content">
             <div v-for="item in listData" class="item-content">
                 <div class="image-div">
@@ -19,16 +22,16 @@
                     <p>{{ item.new_content }}</p>
                 </div>
             </div>
-            <div slot="top" class="mint-loadmore-top">
+            <!--<div slot="top" class="mint-loadmore-top">
                 <span v-show="topStatus === 'pull'">下拉刷新</span>
                 <span v-show="topStatus === 'drop'" class="rotate">释放刷新</span>
                 <span v-show="topStatus === 'loading'">正在加载...</span>
-            </div>
-            <div slot="bottom" class="mint-loadmore-top">
-                <span v-show="topStatus === 'pull'">下拉刷新</span>
-                <span v-show="topStatus === 'drop'" class="rotate">释放刷新</span>
-                <span v-show="topStatus === 'loading'">正在加载...</span>
-            </div>
+            </div>-->
+            <!--<div slot="bottom" class="mint-loadmore-bottom">
+                <span v-show="bottomStatus === 'pull'">上拉加载更多</span>
+                <span v-show="bottomStatus === 'drop'" class="rotate">释放加载</span>
+                <span v-show="bottomStatus === 'loading'">正在加载...</span>
+            </div>-->
         </mt-loadmore>
 	</div>
 </template>
@@ -41,8 +44,10 @@
 		data() {
 			return {
                 topStatus: '',
+                bottomStatus: '',
                 pageIndex: 1,
                 pageSize: 10,
+                allLoaded: false,
                 // queryValue: '',
                 listData: [],
                 baseUrl: localStorage.XrmBaseUrl
@@ -55,20 +60,23 @@
         },
 		methods: {
             handleTopChange(status) {
-                this.topStatus = status;
+                this.topStatus = status
+            },
+            handleBottomChange(status) {
+                this.bottomStatus = status
             },
             refresh() {
-                console.log('refresh')
                 this.pageIndex = 1
-                this.loadData()
+                this.listData = []
+                this.allLoaded = false
+                this.loadData(true)
             },
             // searchClick: function(){
 			// 	this.pageIndex = 1
 			// 	this.listData = []
             //     this.loadData(false)
             // },
-            loadData: function(){
-                console.log('11111start')
+            loadData: function(isTopPull){
 				var loading = Loading.service({
 					lock: true,
 					text: '正在加载...'
@@ -81,13 +89,19 @@
 	          	}
 	            this.$http.get(url, config)
 	                .then((resp) => {
-						this.topStatus = ''
+                        if(resp.data.length < this.pageSize){
+                            this.allLoaded = true
+                        }
                         loading.close()
                         for(var i = 0; i < resp.data.length; i++){
     						this.listData.push(resp.data[i])
     					}
+                        if(isTopPull){
+                            this.$refs.RefreshAndLoadMore.onTopLoaded()
+                        }else{
+                            this.$refs.RefreshAndLoadMore.onBottomLoaded()
+                        }
 	                }, (err) => {
-						this.topStatus = ''
                         loading.close()
     					Toast({
     						message: err.response.data
@@ -98,10 +112,8 @@
 	                })
             },
             loadMore() {
-                console.log('loadMore')
-                console.log('loadMore11111')
 				this.pageIndex += 1
-                this.loadData()
+                this.loadData(false)
             }
 		}
 	}
