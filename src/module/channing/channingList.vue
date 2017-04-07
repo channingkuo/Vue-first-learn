@@ -6,15 +6,28 @@
 		    </router-link>
 	    </mt-header>
 
-        <mt-loadmore :top-method="loadMore" @top-status-change="handleTopChange" class="list-content">
-            <div v-for="item in listData">
-                <img class="image-class" :src="baseUrl + '/WeChat_Photoes/' + item.wx_photos[0].new_image_urlName" />
-                <h2>{{ item.new_title }}</h2>
-                <p>{{ item.new_content }}</p>
+        <mt-loadmore :auto-fill="false"
+                    :top-method="refresh"
+                    :bottom-method="loadMore"
+                    @top-status-change="handleTopChange" class="list-content">
+            <div v-for="item in listData" class="item-content">
+                <div class="image-div">
+                    <img class="image-class" :src="baseUrl + '/WeChat_Photoes/' + item.wx_photos[0].new_image_urlName" />
+                </div>
+                <div class="item-text">
+                    <h2>{{ item.new_title }}</h2>
+                    <p>{{ item.new_content }}</p>
+                </div>
             </div>
             <div slot="top" class="mint-loadmore-top">
-                <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-                <span v-show="topStatus === 'loading'">Loading...</span>
+                <span v-show="topStatus === 'pull'">下拉刷新</span>
+                <span v-show="topStatus === 'drop'" class="rotate">释放刷新</span>
+                <span v-show="topStatus === 'loading'">正在加载...</span>
+            </div>
+            <div slot="bottom" class="mint-loadmore-top">
+                <span v-show="topStatus === 'pull'">下拉刷新</span>
+                <span v-show="topStatus === 'drop'" class="rotate">释放刷新</span>
+                <span v-show="topStatus === 'loading'">正在加载...</span>
             </div>
         </mt-loadmore>
 	</div>
@@ -30,15 +43,13 @@
                 topStatus: '',
                 pageIndex: 1,
                 pageSize: 10,
-                loading: false,
                 // queryValue: '',
                 listData: [],
-                baseUrl: ''
+                baseUrl: localStorage.XrmBaseUrl
 			}
 		},
-        mounted: function() {
+        created: function() {
             this.$nextTick(function() {
-                this.baseUrl = localStorage.XrmBaseUrl
                 this.loadData()
             })
         },
@@ -46,12 +57,18 @@
             handleTopChange(status) {
                 this.topStatus = status;
             },
+            refresh() {
+                console.log('refresh')
+                this.pageIndex = 1
+                this.loadData()
+            },
             // searchClick: function(){
 			// 	this.pageIndex = 1
 			// 	this.listData = []
             //     this.loadData(false)
             // },
             loadData: function(){
+                console.log('11111start')
 				var loading = Loading.service({
 					lock: true,
 					text: '正在加载...'
@@ -64,13 +81,13 @@
 	          	}
 	            this.$http.get(url, config)
 	                .then((resp) => {
-                        this.loading = false
+						this.topStatus = ''
                         loading.close()
                         for(var i = 0; i < resp.data.length; i++){
     						this.listData.push(resp.data[i])
     					}
 	                }, (err) => {
-                        this.loading = false
+						this.topStatus = ''
                         loading.close()
     					Toast({
     						message: err.response.data
@@ -81,7 +98,8 @@
 	                })
             },
             loadMore() {
-                this.loading = true
+                console.log('loadMore')
+                console.log('loadMore11111')
 				this.pageIndex += 1
                 this.loadData()
             }
@@ -90,11 +108,43 @@
 </script>
 
 <style scoped>
+.image-div{
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+}
+
 .image-class{
-    width: 200px;
+    height: 100px;
+    width: 100px;
 }
 
 .list-content{
     margin-top: 40px;
+}
+
+.item-content{
+    border-bottom: 1px solid rgb(212, 212, 212);
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+}
+
+.item-text{
+    padding: 20px 10px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: column;
+}
+
+h2{
+    color: black;
+    font-size: 20px;
+}
+
+p{
+    margin-top: 10px;
+    color: gray;
+    font-size: 14px;
 }
 </style>
