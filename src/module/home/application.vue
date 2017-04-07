@@ -26,6 +26,7 @@
 		created() {
 			var loading = Loading.service({
 				lock: true,
+				fullscreen: false,
 				text: '正在加载数据...'
 			})
 
