@@ -49,4 +49,26 @@ export default {
     position: absolute;
     opacity: 0;
 }
+
+.slide-right-enter-active {
+    transition: transform .3s ease-in-out;
+    transform-origin: right;
+    position: absolute;
+}
+.slide-right-leave-active {
+    transition: transform .3s ease-in-out;
+    transform-origin: left;
+    position: absolute;
+    opacity: 0;
+}
+.slide-right-enter {
+    transform: translateX(100%);
+    position: absolute;
+    opacity: 0;
+}
+.slide-right-leave {
+    transform: translateX(-`·100%);
+    position: absolute;
+    opacity: 0;
+}
 </style>
