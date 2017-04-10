@@ -6,6 +6,7 @@
 		  </router-link>
 		</mt-header>
 		这里是客户详情页面
+		{{$route.params.accountId}}
 		<input type="text" v-model="accName" />
 		<mt-button @click="saveAccountDetail">保存</mt-button>
 	</div>
@@ -15,6 +16,8 @@
 	export default {
 		methods: {
 			saveAccountDetail () {
+				console.log(this.$router)
+				console.log(this.$route)
 				this.tmpArr = JSON.parse(localStorage.accList)
 				this.tmpArr.push({name:this.accName,id:this.accName})
 				localStorage.accList= JSON.stringify(this.tmpArr)
