@@ -1,14 +1,11 @@
 <template>
     <div>
         <transition :name="transitionName">
-            <keep-alive>
-                <router-view v-if="$route.meta.keepAlive" />
+            <keep-alive v-if="$route.meta.keepAlive">
+                <router-view></router-view>
             </keep-alive>
+            <router-view v-else></router-view>
         </transition>
-        <transition :name="transitionName">
-            <router-view v-if="!$route.meta.keepAlive" />
-        </transition>
-
     </div>
 </template>
 
